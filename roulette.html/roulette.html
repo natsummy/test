@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>roulette</title>
+    <link rel="stylesheet" href="/JS/roulette.css">
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+    var interval_id;
+    var num = 0;
+    var stopNo = 17;
+    var flag = 0;
+    var array = new Array();
+
+    function createArray() {
+        for (var i = 1; i < 17; i++) {
+            array.push(i);
+        }
+    }
+        
+    function r_start() {
+        if (flag === 0) {
+            flag = 1;
+            interval_id = setInterval(r_starting, 100);
+        }
+    }
+    
+    function r_starting() {
+        if ( stopNo === num ) {
+            $('#box' + stopNo).css({'background-color':'green'});
+        } else {
+        $('#box' + num).css({'background-color':'white'});
+        }
+        num = array[Math.floor( Math.random() * array.length ) ]//乱数
+        $('#box' + num).css({'background-color':'lime'});
+    }
+    
+    function r_stop(){
+        clearInterval(interval_id);
+        stopNo = num;
+        $('#box' + stopNo).css({'background-color':'green'});
+        var index = array.indexOf(stopNo);
+        array.splice(index,1);
+        flag = 0;
+    }
+    
+    function r_reset(){
+        $('div').css({'background-color':'white'});
+        clearInterval(interval_id);
+        createArray();
+        num = 0;
+        stopNo = 17;
+        flag = 0;
+    }
+
+    $(document).ready(function(){
+        createArray();
+        $('#start').click(r_start);
+        $('#stop').click(r_stop);
+        $('#reset').click(r_reset);
+    });
+    </script>
+</head>
+<body>
+    <div id="box1">1</div>    
+    <div id="box2">2</div>    
+    <div id="box3">3</div>    
+    <div id="box4">4</div>    
+    <div id="box5">5</div>    
+    <div id="box6">6</div>    
+    <div id="box7">7</div>    
+    <div id="box8">8</div>    
+    <div id="box9">9</div>    
+    <div id="box10">10</div>    
+    <div id="box11">11</div>
+    <div id="box12">12</div>    
+    <div id="box13">13</div>    
+    <div id="box14">14</div>    
+    <div id="box15">15</div>    
+    <div id="box16">16</div>    
+    <button id="start">スタート</button>
+    <button id="stop">ストップ</button>
+    <button id="reset">リセット</button>
+</body>
+</html>
